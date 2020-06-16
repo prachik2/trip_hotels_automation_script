@@ -113,13 +113,14 @@ class TripHotels(scrapy.Spider):
                 pass
 
     def start_requests(self):
+        url = "https://www.trip.com/hotels/london-hotel-detail-733159/hyatt-place-london-heathrow-airport?checkin=2020-12-01&checkout=2020-12-08&city=338&page=1&minprice=79&mincurr=USD&adult=2&children=0&ages=&crn=1&display=0&from_page=list&showtotalamt=0&hoteluniquekey=H4sIAAAAAAAAAON6zMTFK8Fk8B8GGIWYOBilzjJxTPk5fTqzwQ5-i75sRwYQiGh08AQzDDc5BPBMYpTkPPxVI6b_ULiDIJiRFOrgxMqxwEuCZRKjNERuElDu-uICWy7zUAcNRqDsVU8k2SKgLBdIWgooywSUXYxTlhmvLAteWVa8smxQ2RmMz-_rrGBk3MgI9qNHh8MORqYTjP4LmGat_SWzi4mNY0kTiwTLISZWjjuhEiynmBguMTHcYmJ4xMTwionhExPDL6DMHqBBTcwMXcwMk5iBQcEjwTKLmWERM4MQKzg0pRQsjAwNk8wskwyMLY1MjIzMkhINkk3SEo2SLCyMUpNTkxS4Nd5dWfid1YjBilmK0c2DPYjN0MjMxc04SoaLOTTYRXBL5Nedt7xkHKRAPEUYL4k1NU83IiJjD2sBYxcjkwDjJEZOSAQCfQAAEgrcE-MBAAA(&stand=&stdcode=&shoppingid=&fgt=&module=list&pctoken=8211b69b03924226ba0c4fa2b882eceb-733159&ltracelogid=&link=title"
         # url = "https://www.trip.com/hotels/list?city=77528&countryId=4&checkin=2020/06/15&checkout=2020/06/16&optionId=11127264&optionType=Hotel&optionName=Bangkok%20Boutique%20Resort&display=Bangkok%20Boutique%20Resort&crn=1&adult=1&children=0&searchBoxArg=t&travelPurpose=0&ctm_ref=ix_sb_dl&domestic=0"
-        url ="https://www.trip.com/hotels/london-hotel-detail-2198797/hampton-by-hilton-london-waterloo?checkin=2020" \
-             "-12-01&checkout=2020-12-08&city=338&page=1&minprice=164&mincurr=USD&adult=2&children=0&ages=&crn=1" \
-             "&display=0&from_page=list&showtotalamt=0&hoteluniquekey" \
-             "=H4sIAAAAAAAAAON6y8TFK8Fk8B8GGIWYOBilrjNxbNgwJ9zgEqvFVSdHBhBQmeTgCaIb" \
-             "-A47BPBMYpTi7D_0VSOmP8NB8DCIlkpzcGLjODCTUYJlEqMMpqQGI35pJvzSzPilWfBLs" \
-             "-KXZoNJz2DsndXGuIKRcSMj2NM5Mx12MDKdYFzCuIBp0YUlnLuYgAo3cUiwHAIyujcDdZxiYrjExHCLieERE8MrJoZPTAy_mKCGNTEzdDEzTGJm5TgtKcEyi5lhETODEAsoXKUUUoyTUi2NzZONUw2NTQzSDJLSLFJNLA2BfNM0yxRLcwVujbuH5nxnNWKwYpZidPNgD2JzMzY3dXGOkuFiDg12EewrLZTmTZBxkALxFGG8JNbUPN2IiIw9rAWMXYxMAoyTGDnBMQnyAgB2HUq37AEAAA((&stand=&stdcode=&shoppingid=&fgt=&module=list&pctoken=d3be937c3e1340f0bf8e491c3e5f9d97-2198797&ltracelogid=&link=title "
+        # url ="https://www.trip.com/hotels/london-hotel-detail-2198797/hampton-by-hilton-london-waterloo?checkin=2020" \
+        #      "-12-01&checkout=2020-12-08&city=338&page=1&minprice=164&mincurr=USD&adult=2&children=0&ages=&crn=1" \
+        #      "&display=0&from_page=list&showtotalamt=0&hoteluniquekey" \
+        #      "=H4sIAAAAAAAAAON6y8TFK8Fk8B8GGIWYOBilrjNxbNgwJ9zgEqvFVSdHBhBQmeTgCaIb" \
+        #      "-A47BPBMYpTi7D_0VSOmP8NB8DCIlkpzcGLjODCTUYJlEqMMpqQGI35pJvzSzPilWfBLs" \
+        #      "-KXZoNJz2DsndXGuIKRcSMj2NM5Mx12MDKdYFzCuIBp0YUlnLuYgAo3cUiwHAIyujcDdZxiYrjExHCLieERE8MrJoZPTAy_mKCGNTEzdDEzTGJm5TgtKcEyi5lhETODEAsoXKUUUoyTUi2NzZONUw2NTQzSDJLSLFJNLA2BfNM0yxRLcwVujbuH5nxnNWKwYpZidPNgD2JzMzY3dXGOkuFiDg12EewrLZTmTZBxkALxFGG8JNbUPN2IiIw9rAWMXYxMAoyTGDnBMQnyAgB2HUq37AEAAA((&stand=&stdcode=&shoppingid=&fgt=&module=list&pctoken=d3be937c3e1340f0bf8e491c3e5f9d97-2198797&ltracelogid=&link=title "
         # for url in start_url_list:
         yield scrapy.Request(url, self.parse_hotel_details)
 
@@ -150,9 +151,12 @@ class TripHotels(scrapy.Spider):
 
 
             for item2 in item.css("div.room-list"):
-                data["room_type"] = item2.css('div.roomname ::text').extract()
-                for amanity in item2.css("div.roomlist-baseroom-card > div.roomcard > div.saleroomlist > div.salecardlist-rooms > div.salecard-frame"):
-                    data["breakfast"] = amanity.css("div.salecard-bedfacility  > div.facility > div.des-with-icon > span > span.desc-text underline :: text").extract_first()
-                    data["price"] = amanity.css("div.salecard-price > div.salecard-price-panel > div.price :: text").extract_first()
+                print(item2,"---78989")
+                data["room_type"] = item2.css('div.roomlist-baseroom-card + div.roomname ::text').extract()
+                print(data["room_type"],"-----------------")
+                # for amanity in item2.css("div.roomlist-baseroom-card > div.roomcard > div.saleroomlist > div.salecardlist-rooms > div.salecard-frame"):
+                #     data["breakfast"] = amanity.css("div.salecard-bedfacility  > div.facility > div.des-with-icon > span > span.desc-text underline :: text").extract_first()
+                #     data["price"] = amanity.css("div.salecard-price > div.salecard-price-panel > div.price :: text").extract_first()
 
             print(data)
+        return data
